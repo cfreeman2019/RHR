@@ -2,15 +2,16 @@ package rightHandPackage;
 
 import java.util.Scanner;
 
-//need to add comments to code
-//try making a version where it only asks for charge if force isn't zero or the field configuration isn't possible
 public class RightHandRule
 {
 	public static void main(String[] args) {
 		
 		Scanner input = new Scanner(System.in);
-		System.out.println("This program will ask for inputs of velocity, magnetic field, and force.\n"
-				+ "Enter any input besides a direction to find the direction for that vector." );
+		System.out.println("This program asks you to input the direction of the velocity, magnetic field, and force\n"
+				+ "of a charged particle moving through a magnetic field. It will ask for these fields one at a time, and\n"
+				+ "then it will ask if the charge is positive or negative. To find out if a combination of 3 chosen\n"
+				+ "directions are possible input a direction for all three fields. To find any of the three fields,\n"
+				+ "just hit the enter key when the program prompts you for a direction of the field that you are looking for.\n" );
 		boolean runTest = true;
 		while(runTest) {
 			System.out.println("Possible directions are -> up, down, in, out, left, or right.\n"
@@ -29,7 +30,8 @@ public class RightHandRule
 			Directions forceDirection = Directions.fromString(force);
 			
 			System.out.println("Is the point charge positive or negative?\n"
-					+ "Type 'true' for positive and anything else for negative");
+					+ "Type 'true' for positive and hit enter for negative\n"
+					+ "(Any input that isn't 'true' will be assumed as negative)");
 			String chargeString = input.nextLine();
 			boolean chargeSign = Boolean.parseBoolean(chargeString);
 			
@@ -43,7 +45,6 @@ public class RightHandRule
 	}
 	
 	public static String interaction(Directions v, Directions b, Directions f, boolean pc) {
-		
 		if(notEnoughInfo(v,b,f))
 		    return "Not enough information to determine what you were looking for.";
 		if(v != null) { //needs this line else a null error will be thrown
@@ -52,7 +53,6 @@ public class RightHandRule
 		}
 		if(isImpossible(v,b,f))	
 			return "This configuration is impossible.";
-		//maybe try to write something that checks if an input with all three vectors is correct
 		if(v == null) { //finding velocity
 			if(pc)
 				return "Velocity's direction is " + findThirdDirection(b,f);
@@ -71,7 +71,11 @@ public class RightHandRule
 			else
 				return "Force's direction is " + findThirdDirection(v,b).negate();
 		}
-		return "There are no unkwowns to find";
+		//if none of the vectors are null....
+		Directions expectedForce = findThirdDirection(v,b);
+		if(f == expectedForce) //checks if actualForce is expectedForce
+			return "This configuration is possible";
+		return "This is an impossible configuration";
 	}
 	
 	public static boolean isImpossible(Directions d1, Directions d2, Directions d3) {
