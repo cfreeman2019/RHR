@@ -10,7 +10,7 @@ public class RightHandRule
 		System.out.println("This program asks you to input the direction of the velocity, magnetic field, and force\n"
 				+ "of a charged particle moving through a magnetic field. It will ask for these fields one at a time, and\n"
 				+ "then it will ask if the charge is positive or negative. To find out if a combination of 3 chosen\n"
-				+ "directions are possible input a direction for all three fields. To find any of the three fields,\n"
+				+ "directions is possible input a direction for all three fields. To find any of the three fields,\n"
 				+ "just hit the enter key when the program prompts you for a direction of the field that you are looking for.\n" );
 		boolean runTest = true;
 		while(runTest) {
